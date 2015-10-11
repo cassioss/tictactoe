@@ -1,4 +1,4 @@
-package tictactoe;
+package player;
 
 import java.util.Random;
 
