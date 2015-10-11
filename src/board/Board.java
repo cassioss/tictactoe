@@ -1,4 +1,4 @@
-package player;
+package board;
 
 import java.util.ArrayList;
 import java.util.List;

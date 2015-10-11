@@ -1,5 +1,7 @@
 package player;
 
+import board.Board;
+
 import java.util.List;
 import java.util.Random;
 
@@ -7,7 +9,7 @@ import java.util.Random;
  * @author Cassio dos Santos Sousa
  * @version 1.0
  */
-public class COM extends Player {
+public class COM extends AbstractPlayer {
 
     public COM(boolean isCross, boolean isFirst) {
         super(isCross, isFirst);

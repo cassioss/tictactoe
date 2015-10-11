@@ -1,12 +1,14 @@
 package player;
 
+import board.Board;
+
 import java.util.Scanner;
 
 /**
  * @author Cassio dos Santos Sousa
  * @version 1.0
  */
-public class Person extends Player {
+public class Person extends AbstractPlayer {
 
     public Person(boolean isCross, boolean isFirst) {
         super(isCross, isFirst);

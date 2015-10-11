@@ -1,5 +1,7 @@
 package player;
 
+import board.Board;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,14 +9,14 @@ import java.util.List;
  * @author Cassio dos Santos Sousa
  * @version 1.0
  */
-public abstract class Player {
+public abstract class AbstractPlayer {
 
     protected boolean isCross;
     protected int score;
     protected boolean isFirst;
     protected List<Integer> alreadyPlayed;
 
-    public Player(boolean isCross, boolean isFirst) {
+    public AbstractPlayer(boolean isCross, boolean isFirst) {
         this.isCross = isCross;
         this.isFirst = isFirst;
         score = 0;

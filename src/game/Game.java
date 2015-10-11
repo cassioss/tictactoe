@@ -1,4 +1,10 @@
-package player;
+package game;
+
+import board.Board;
+import player.COM;
+import player.Person;
+import player.AbstractPlayer;
+import player.RandCOM;
 
 import java.util.Random;
 
@@ -41,7 +47,7 @@ public class Game {
         }
     }
 
-    private void startGame(Player p1, Player p2) {
+    private void startGame(AbstractPlayer p1, AbstractPlayer p2) {
         while (!ticTacToe.win() || !ticTacToe.tie()) {
             if (coinToss == oddTurn)
                 computePlay(p1);
@@ -52,7 +58,7 @@ public class Game {
     }
 
 
-    private void computePlay(Player p) {
+    private void computePlay(AbstractPlayer p) {
         p.makeMove(ticTacToe, p.nextPlay(ticTacToe));
         ticTacToe.printBoard();
     }
