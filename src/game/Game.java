@@ -20,27 +20,60 @@ public class Game {
     private boolean coinToss;
     private boolean hasCross;
     private boolean oddTurn;
+    private int mode;
 
-    public Game(){
-        System.out.println("Select the game mode:");
-        System.out.println("(0) Player VS COM (Expert)");
-        System.out.println("(1) Player VS RandCOM (Easy)");
-        System.out.println("(2) COM VS RandCOM");
-        System.out.println("(3) COM VS COM");
-        System.out.println("(4) RandCOM VS RandCOM");
-        System.out.println("(5) Player VS Player");
+    private static final String MODE_0 = "(0) Player VS COM (Expert)";
+    private static final String MODE_1 = "(1) Player VS RandCOM (Easy)";
+    private static final String MODE_2 = "(2) COM VS RandCOM";
+    private static final String MODE_3 = "(3) COM VS COM";
+    private static final String MODE_4 = "(4) RandCOM VS RandCOM";
+    private static final String MODE_5 = "(5) Player VS Player";
+
+    public Game() {
+        System.out.println("Select the game mode (mod 6):");
+        System.out.println(MODE_0);
+        System.out.println(MODE_1);
+        System.out.println(MODE_2);
+        System.out.println(MODE_3);
+        System.out.println(MODE_4);
+        System.out.println(MODE_5);
         System.out.print("\nYour choice: ");
-        int mode = 5;
-        try{
+        mode = 5;
+        try {
             Scanner sc = new Scanner(System.in);
             mode = sc.nextInt();
-        } catch (InputMismatchException exception){
+        } catch (InputMismatchException exception) {
             System.out.println("You opted an invalid choice; You will be redirected to PvP");
         }
-        executeGame(mode);
+        System.out.println("You chose mode " + numberToMode(mode));
     }
 
-    public void executeGame(int mode) {
+    private String numberToMode(int mode) {
+        String modeName = "";
+        switch (mode % 6) {
+            case 0:
+                modeName = MODE_0;
+                break;
+            case 1:
+                modeName = MODE_1;
+                break;
+            case 2:
+                modeName = MODE_2;
+                break;
+            case 3:
+                modeName = MODE_3;
+                break;
+            case 4:
+                modeName = MODE_4;
+                break;
+            case 5:
+                modeName = MODE_5;
+                break;
+        }
+        return modeName;
+    }
+
+    public void run() {
 
         ticTacToe = new Board();
         oddTurn = true;
@@ -92,6 +125,7 @@ public class Game {
 
     public static void main(String[] args) {
         Game game = new Game();
+        game.run();
     }
 
 }
