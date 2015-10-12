@@ -15,7 +15,7 @@ public class COM extends AbstractPlayer {
         super(isCross, isFirst);
     }
 
-    protected int nextPlay(Board gameBoard) {
+    public int nextPlay(Board gameBoard) {
         if (isFirst)
             return playFirst(gameBoard);
         else
@@ -24,7 +24,7 @@ public class COM extends AbstractPlayer {
 
     private int playFirst(Board gameBoard) {
         int play = 0;
-        switch (gameBoard.plays) {
+        switch (gameBoard.getPlays()) {
             case 0:
                 play = playAtCorners();
                 break;
@@ -35,7 +35,7 @@ public class COM extends AbstractPlayer {
             case 6:
                 break;
             case 8:
-                play = randomPlay(gameBoard.availablePlays);    // There will be only one possibility
+                play = randomPlay(gameBoard.getAvailablePlays());    // There will be only one possibility
                 break;
             default:
                 play = 0;
@@ -46,7 +46,7 @@ public class COM extends AbstractPlayer {
 
     private int playSecond(Board gameBoard) {
         int play = 0;
-        switch (gameBoard.plays) {
+        switch (gameBoard.getPlays()) {
             case 1:
                 play = tryAtCenter(gameBoard);
                 break;
@@ -64,8 +64,8 @@ public class COM extends AbstractPlayer {
     }
 
     private int tryAtCenter(Board gameBoard) {
-        if (gameBoard.canPlayAt(Board.CENTER))
-            return memorizePlay(Board.CENTER);
+        if (gameBoard.canPlayAt(4))
+            return memorizePlay(4);
         else
             return playAtCorners();
     }
@@ -83,8 +83,7 @@ public class COM extends AbstractPlayer {
     }
 
     private int memorizePlay(int play) {
-        alreadyPlayed.add(play);
+        iAlreadyPlayed.add(play);
         return play;
     }
-
 }

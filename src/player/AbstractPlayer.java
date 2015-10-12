@@ -14,13 +14,15 @@ public abstract class AbstractPlayer {
     protected boolean isCross;
     protected int score;
     protected boolean isFirst;
-    protected List<Integer> alreadyPlayed;
+    protected List<Integer> iAlreadyPlayed;
+    protected List<Integer> opponentPlayed;
 
     public AbstractPlayer(boolean isCross, boolean isFirst) {
         this.isCross = isCross;
         this.isFirst = isFirst;
         score = 0;
-        alreadyPlayed = new ArrayList<>();
+        iAlreadyPlayed = new ArrayList<>();
+        opponentPlayed = new ArrayList<>();
     }
 
     protected String symbol() {
@@ -30,8 +32,8 @@ public abstract class AbstractPlayer {
             return "O";
     }
 
-    protected void makeMove(Board gameBoard, int play) {
-        if (!gameBoard.availablePlays.contains(play)) {
+    public void makeMove(Board gameBoard, int play) {
+        if (gameBoard.canPlayAt(play)) {
             gameBoard.playAt(play, symbol());
             checkWinsAt(gameBoard);
         }
@@ -40,8 +42,9 @@ public abstract class AbstractPlayer {
     protected void checkWinsAt(Board gameBoard) {
         if (gameBoard.win()) {
             score++;
-            gameBoard.clear();
-            alreadyPlayed = new ArrayList<>();
+            gameBoard.requestClear();
+            iAlreadyPlayed = new ArrayList<>();
+            opponentPlayed = new ArrayList<>();
         }
     }
 
@@ -57,5 +60,5 @@ public abstract class AbstractPlayer {
         return lastPlay == 4;
     }
 
-    protected abstract int nextPlay(Board gameBoard);
+    public abstract int nextPlay(Board gameBoard);
 }

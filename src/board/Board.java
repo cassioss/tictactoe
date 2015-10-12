@@ -9,12 +9,18 @@ import java.util.List;
  */
 public class Board {
 
-    protected static final int CENTER = 4;
+    private String[][] board;
+    private List<Integer> availablePlays;
+    private int plays;
+    private Integer lastPlay;
 
-    protected String[][] board;
-    protected List<Integer> availablePlays;
-    protected int plays;
-    protected Integer lastPlay;
+    public int getPlays() {
+        return plays;
+    }
+
+    public List<Integer> getAvailablePlays() {
+        return availablePlays;
+    }
 
     public Board() {
         clear();
@@ -52,6 +58,7 @@ public class Board {
             System.out.println();
         }
         System.out.println();
+        System.out.println("Available plays: " + availablePlays.toString() + "\n");
     }
 
     private boolean winHorizontalAt(int posY) {
@@ -86,21 +93,26 @@ public class Board {
         return winAtMainDiagonal() || winAtSecDiagonal();
     }
 
-    protected boolean win() {
+    public boolean win() {
         return winHorizontal() || winVertical() || winDiagonal();
     }
 
-    protected boolean tie() {
+    public boolean tie() {
         return availablePlays.size() == 0 && !win();
     }
 
-    protected void clear() {
+    private void clear() {
         board = new String[3][3];
         availablePlays = new ArrayList<>();
         for (int i = 0; i < 9; i++)
             availablePlays.add(i);
         plays = 0;
         lastPlay = null;
+    }
+
+    public void requestClear() {
+        if (win() || tie())
+            clear();
     }
 
 }

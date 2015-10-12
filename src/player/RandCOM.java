@@ -14,8 +14,8 @@ public class RandCOM extends AbstractPlayer {
         super(isCross, isFirst);
     }
 
-    protected int nextPlay(Board gameBoard) {
-        return gameBoard.availablePlays.get(new Random().nextInt(gameBoard.availablePlays.size()));
+    public int nextPlay(Board gameBoard) {
+        return gameBoard.getAvailablePlays().get(new Random().nextInt(gameBoard.getAvailablePlays().size()));
     }
 
 }

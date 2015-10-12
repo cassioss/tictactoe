@@ -14,7 +14,7 @@ public class Person extends AbstractPlayer {
         super(isCross, isFirst);
     }
 
-    protected int nextPlay(Board gameBoard) {
+    public int nextPlay(Board gameBoard) {
         System.out.print("Make your move: ");
         Scanner sc = new Scanner(System.in);
         return sc.nextInt();
