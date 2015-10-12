@@ -6,7 +6,9 @@ import player.Person;
 import player.AbstractPlayer;
 import player.RandCOM;
 
+import java.util.InputMismatchException;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * @author Cassio dos Santos Sousa
@@ -19,7 +21,26 @@ public class Game {
     private boolean hasCross;
     private boolean oddTurn;
 
-    public Game(int mode) {
+    public Game(){
+        System.out.println("Select the game mode:");
+        System.out.println("(0) Player VS COM (Expert)");
+        System.out.println("(1) Player VS RandCOM (Easy)");
+        System.out.println("(2) COM VS RandCOM");
+        System.out.println("(3) COM VS COM");
+        System.out.println("(4) RandCOM VS RandCOM");
+        System.out.println("(5) Player VS Player");
+        System.out.print("\nYour choice: ");
+        int mode = 5;
+        try{
+            Scanner sc = new Scanner(System.in);
+            mode = sc.nextInt();
+        } catch (InputMismatchException exception){
+            System.out.println("You opted an invalid choice; You will be redirected to PvP");
+        }
+        executeGame(mode);
+    }
+
+    public void executeGame(int mode) {
 
         ticTacToe = new Board();
         oddTurn = true;
@@ -70,7 +91,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game game = new Game(5);
+        Game game = new Game();
     }
 
 }
