@@ -43,7 +43,7 @@ public class Game {
             Scanner sc = new Scanner(System.in);
             mode = sc.nextInt();
         } catch (InputMismatchException exception) {
-            System.out.println("You opted an invalid choice; You will be redirected to PvP");
+            System.out.println("You opted an invalid choice; You will be redirected to mode " + mode);
         }
         System.out.println("You chose mode " + numberToMode(mode));
     }
