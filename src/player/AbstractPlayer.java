@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class AbstractPlayer {
 
     protected boolean isCross;
-    protected int score;
+    public int score;
     protected boolean isFirst;
     protected List<Integer> iAlreadyPlayed;
     protected List<Integer> opponentPlayed;
@@ -35,17 +35,20 @@ public abstract class AbstractPlayer {
     public void makeMove(Board gameBoard, int play) {
         if (gameBoard.canPlayAt(play)) {
             gameBoard.playAt(play, symbol());
+            iAlreadyPlayed.add(play);
             checkWinsAt(gameBoard);
         }
     }
 
     protected void checkWinsAt(Board gameBoard) {
-        if (gameBoard.win()) {
+        if (gameBoard.win(symbol())) {
             score++;
-            gameBoard.requestClear();
-            iAlreadyPlayed = new ArrayList<>();
-            opponentPlayed = new ArrayList<>();
         }
+    }
+
+    public void newGame() {
+        iAlreadyPlayed = new ArrayList<>();
+        opponentPlayed = new ArrayList<>();
     }
 
     protected boolean playedAtCorner(int lastPlay) {
@@ -61,4 +64,18 @@ public abstract class AbstractPlayer {
     }
 
     public abstract int nextPlay(Board gameBoard);
+
+    public void keepOpponentMove(int play) {
+        opponentPlayed.add(play);
+    }
+
+    public String playerDetails(boolean fullDetail) {
+        String player = "Symbol: " + symbol() + "\n";
+        if (fullDetail) {
+            player += "Played: " + iAlreadyPlayed.toString() + "\n";
+            player += "Opponent played: " + opponentPlayed.toString() + "\n";
+        }
+        player += "Score: " + score + "\n";
+        return player;
+    }
 }

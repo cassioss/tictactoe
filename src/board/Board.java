@@ -12,7 +12,6 @@ public class Board {
     private String[][] board;
     private List<Integer> availablePlays;
     private int plays;
-    private Integer lastPlay;
 
     public int getPlays() {
         return plays;
@@ -66,9 +65,17 @@ public class Board {
                 board[posY][0].equals(board[posY][1]) && board[posY][1].equals(board[posY][2]);
     }
 
+    private boolean winHorizontalAt(int posY, String symbol) {
+        return winHorizontalAt(posY) && board[posY][1].equals(symbol);
+    }
+
     private boolean winVerticalAt(int posX) {
         return (board[0][posX] != null && board[1][posX] != null && board[2][posX] != null) &&
                 board[0][posX].equals(board[1][posX]) && board[1][posX].equals(board[2][posX]);
+    }
+
+    private boolean winVerticalAt(int posX, String symbol) {
+        return winVerticalAt(posX) && board[1][posX].equals(symbol);
     }
 
     private boolean winAtMainDiagonal() {
@@ -85,16 +92,32 @@ public class Board {
         return winHorizontalAt(0) || winHorizontalAt(1) || winHorizontalAt(2);
     }
 
+    private boolean winHorizontal(String symbol) {
+        return winHorizontalAt(0, symbol) || winHorizontalAt(1, symbol) || winHorizontalAt(2, symbol);
+    }
+
     private boolean winVertical() {
         return winVerticalAt(0) || winVerticalAt(1) || winVerticalAt(2);
+    }
+
+    private boolean winVertical(String symbol) {
+        return winVerticalAt(0, symbol) || winVerticalAt(1, symbol) || winVerticalAt(2, symbol);
     }
 
     private boolean winDiagonal() {
         return winAtMainDiagonal() || winAtSecDiagonal();
     }
 
+    private boolean winDiagonal(String symbol) {
+        return winDiagonal() && board[1][1].equals(symbol);
+    }
+
     public boolean win() {
         return winHorizontal() || winVertical() || winDiagonal();
+    }
+
+    public boolean win(String symbol) {
+        return winHorizontal(symbol) || winVertical(symbol) || winDiagonal(symbol);
     }
 
     public boolean tie() {
@@ -107,7 +130,6 @@ public class Board {
         for (int i = 0; i < 9; i++)
             availablePlays.add(i);
         plays = 0;
-        lastPlay = null;
     }
 
     public void requestClear() {

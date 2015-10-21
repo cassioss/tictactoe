@@ -1,9 +1,9 @@
 package game;
 
 import board.Board;
+import player.AbstractPlayer;
 import player.COM;
 import player.Person;
-import player.AbstractPlayer;
 import player.RandCOM;
 
 import java.util.InputMismatchException;
@@ -21,6 +21,9 @@ public class Game {
     private boolean hasCross;
     private boolean oddTurn;
     private int mode;
+    private int games;
+    private int ties;
+    private static final int GAME_LIMIT = 100;
 
     private static final String MODE_0 = "(0) Player VS COM (Expert)";
     private static final String MODE_1 = "(1) Player VS RandCOM (Easy)";
@@ -30,6 +33,8 @@ public class Game {
     private static final String MODE_5 = "(5) Player VS Player";
 
     public Game() {
+        games = 0;
+        ties = 0;
         System.out.println("Select the game mode (mod 6):");
         System.out.println(MODE_0);
         System.out.println(MODE_1);
@@ -45,7 +50,7 @@ public class Game {
         } catch (InputMismatchException exception) {
             System.out.println("You opted an invalid choice; You will be redirected to mode " + mode);
         }
-        System.out.println("You chose mode " + numberToMode(mode));
+        System.out.println("\nYou chose mode " + numberToMode(mode) + "\n");
     }
 
     private String numberToMode(int mode) {
@@ -102,19 +107,41 @@ public class Game {
     }
 
     private void startGame(AbstractPlayer p1, AbstractPlayer p2) {
-        while (!ticTacToe.win() || !ticTacToe.tie()) {
+        while (!ticTacToe.win() && !ticTacToe.tie()) {
             if (coinToss == oddTurn)
-                computePlay(p1);
+                p2.keepOpponentMove(computePlay(p1));
             else
-                computePlay(p2);
+                p1.keepOpponentMove(computePlay(p2));
+            System.out.println("Player 1\n" + p1.playerDetails(false));
+            System.out.println("Player 2\n" + p2.playerDetails(false));
+            ticTacToe.printBoard();
             oddTurn = !oddTurn;
+        }
+        beginAgain(p1, p2);
+    }
+
+    private void beginAgain(AbstractPlayer p1, AbstractPlayer p2) {
+        if (ticTacToe.tie()) ties++;
+        if (++games != 100) {
+            ticTacToe.requestClear();
+            p1.newGame();
+            p2.newGame();
+            toss();
+            System.out.println("\nNEW GAME\n");
+            startGame(p1, p2);
+        } else {
+            System.out.println("End of simulation\n");
+            System.out.println("Number of games: " + games);
+            System.out.println("Number of ties: " + ties);
+            System.out.println("Player 1 Score: " + p1.score);
+            System.out.println("Player 2 Score: " + p2.score);
         }
     }
 
-
-    private void computePlay(AbstractPlayer p) {
-        p.makeMove(ticTacToe, p.nextPlay(ticTacToe));
-        ticTacToe.printBoard();
+    private int computePlay(AbstractPlayer p) {
+        int nextPlay = p.nextPlay(ticTacToe);
+        p.makeMove(ticTacToe, nextPlay);
+        return nextPlay;
     }
 
     private void toss() {
