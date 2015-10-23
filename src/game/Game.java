@@ -122,7 +122,7 @@ public class Game {
 
     private void beginAgain(AbstractPlayer p1, AbstractPlayer p2) {
         if (ticTacToe.tie()) ties++;
-        if (++games != 100) {
+        if (++games != GAME_LIMIT) {
             ticTacToe.requestClear();
             p1.newGame();
             p2.newGame();

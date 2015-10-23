@@ -13,7 +13,7 @@ public abstract class AbstractPlayer {
 
     protected boolean isCross;
     public int score;
-    protected boolean isFirst;
+    public boolean isFirst;
     protected List<Integer> iAlreadyPlayed;
     protected List<Integer> opponentPlayed;
 
@@ -51,18 +51,6 @@ public abstract class AbstractPlayer {
         opponentPlayed = new ArrayList<>();
     }
 
-    protected boolean playedAtCorner(int lastPlay) {
-        return lastPlay == 0 || lastPlay == 2 || lastPlay == 6 || lastPlay == 8;
-    }
-
-    protected boolean playedAtEdge(int lastPlay) {
-        return lastPlay == 1 || lastPlay == 3 || lastPlay == 5 || lastPlay == 7;
-    }
-
-    protected boolean playedAtCenter(int lastPlay) {
-        return lastPlay == 4;
-    }
-
     public abstract int nextPlay(Board gameBoard);
 
     public void keepOpponentMove(int play) {
@@ -78,4 +66,5 @@ public abstract class AbstractPlayer {
         player += "Score: " + score + "\n";
         return player;
     }
+
 }
